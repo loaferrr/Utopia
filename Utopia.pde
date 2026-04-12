@@ -132,7 +132,7 @@ void setup(){
 void draw(){
   doMouse();
 
-  if(millis() - lastSimTime >= simStepInterval){
+  while (millis() - lastSimTime >= simStepInterval) {
     lastSimTime += simStepInterval;
     doPhysics();
     doArchive();

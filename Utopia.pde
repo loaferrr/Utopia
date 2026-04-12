@@ -25,7 +25,13 @@ PGraphics ui;
 int frames = 0;
 int ticks = 0;
 int playback_speed = 1;
-int FPS = 30;
+
+int renderFPS = 60;
+int simulationFPS = 30;
+
+float simStepInterval;
+float lastSimTime = 0;
+
 GLWindow r;
 Map map;
 PImage ui_title;
@@ -94,44 +100,53 @@ void setup(){
     Player newPlayer = new Player(species, coor, false, true, random(0.3333,0.6666), random(0.3333,0.6666), 0,"PRIMORDIAL");
     players.add(newPlayer);
   }
-  
+
   keyHandler = new KeyHandler();
   size(1920,1080,P3D);
-  
+
   r = (GLWindow)surface.getNative();
   if(TRAP_MOUSE){
     r.confinePointer(true);
     r.setPointerVisible(false);
   }
+
   g = createGraphics(1520,1080,P3D);
   ui = createGraphics(400,1080,P2D);
   clearUI();
-  
+
   sfx = new SoundFile[sfx_names.length];
   for(int i = 0; i < sfx_names.length; i++){
     sfx[i] = new SoundFile(this, sfx_names[i]+".wav");
   }
+
   sfx[10].play();
-  frameRate(FPS);
+
+  renderFPS = 60;
+  simulationFPS = 30;
+  frameRate(renderFPS);
+  simStepInterval = 1000.0 / simulationFPS;
+
   ellipseMode(RADIUS);
   ui_title = loadImage("title.png");
 }
 void draw(){
-  for(int i = 0; i < 1; i++){
-    doMouse();
+  doMouse();
+
+  if(millis() - lastSimTime >= simStepInterval){
+    lastSimTime += simStepInterval;
     doPhysics();
     doArchive();
     doGarbageRemoval();
   }
-  
+
   drawVisuals();
   drawUI();
+
   background(255,0,255);
-  
   image(g,0,0);
   image(ui,width-ui.width,0);
   drawCrosshairs();
-  
+
   frames++;
 }
 void drawCrosshairs(){
@@ -281,6 +296,7 @@ void drawUI(){
   ui.textAlign(LEFT);
   ui.textSize(24);
   ui.text(nowToDateString(),10,ui.height-10);
+  ui.text("settings (placeholder)",10,ui.height-35);
   ui.endDraw();
 }
 

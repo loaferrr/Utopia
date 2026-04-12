@@ -237,14 +237,14 @@ void drawUI(){
     taken[s] = false;
   }
   for(int spot = 0; spot < SPECIES_COUNT; spot++){
-    int record = -1;
+    int record0 = -1;
     int recordHolder = -1;
     for(int s = 0; s < SPECIES_COUNT; s++){
       if(taken[s]){
         continue;
       }
-      if(archiveNow.populations[s] > record){
-        record = archiveNow.populations[s];
+      if(archiveNow.populations[s] > record0){
+        record0 = archiveNow.populations[s];
         recordHolder = s;
       }
     }
@@ -336,19 +336,19 @@ void getClosestAI(){
 }
 Player getClosestAIto(float[] loc, Player ignore, float MAX_DIST){
   Player cAI = null;
-  float record = 9999999;
+  float record0 = 9999999;
   for(int i = 0; i < players.size(); i++){
     Player p = players.get(i);
     if(getSpeciesType(p.species) <= 0 || p == ignore){
       continue;
     }
     float dist_ = d_loop(players.get(i).coor, loc, false);
-    if(dist_ < record){
-      record = dist_;
+    if(dist_ < record0){
+      record0 = dist_;
       cAI = players.get(i);
     }
   }
-  if(record >= MAX_DIST){
+  if(record0 >= MAX_DIST){
     cAI = null;
   }
   return cAI;

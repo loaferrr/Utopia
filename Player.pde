@@ -316,7 +316,7 @@ class Player{
       bodyColor = SPECIES_COLORS[species];
       if(this == closest_AI){
         trait.drawDisplay();
-        bodyColor = colorLerp(SPECIES_COLORS[species], color(255,255,255),0.5+0.5*sin(frameCount));
+        // bodyColor = colorLerp(SPECIES_COLORS[species], color(255,255,255),0.5+0.5*sin(frameCount)); // disabled also consider having this as an option and stop having it frame based 
       }
     }
     g.fill(bodyColor);

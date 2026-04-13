@@ -26,6 +26,8 @@ int frames = 0;
 int ticks = 0;
 int playback_speed = 1;
 
+boolean showSettings = false;
+
 int renderFPS = 60;
 int simulationFPS = 30;
 
@@ -297,6 +299,25 @@ void drawUI(){
   ui.textSize(24);
   ui.text(nowToDateString(),10,ui.height-10);
   ui.text("settings (placeholder)",10,ui.height-35);
+  ui.endDraw();
+
+  ui.beginDraw();
+  if (showSettings) {
+    ui.noStroke();
+    ui.fill(0, 180);
+    ui.rect(10, 50, 360, 300);
+
+    ui.fill(255);
+    ui.textSize(22);
+    ui.text("SETTINGS", 20, 80);
+
+    ui.textSize(18);
+
+    ui.text("species count: " + PLAYER_COUNT, 20, 120);
+    ui.text("simulation FPS: " + simulationFPS, 20, 150);
+    // ui.text("breah: " + breah, 20, 180);
+
+  }
   ui.endDraw();
 }
 
